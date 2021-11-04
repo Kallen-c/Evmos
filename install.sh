@@ -1,7 +1,7 @@
 #!/bin/bash
+echo -e "\033[35m start"
 sudo apt install --fix-broken -y &>/dev/null
 sudo apt install nano mc wget -y &>/dev/null
-echo -e "\033[35m"
 . <(wget -qO- https://raw.githubusercontent.com/Kallen-c/utils/main/logo.sh)
 if [ ! $EVMOS_NODENAME ]; then
 	read -p "Enter node name: " EVMOS_NODENAME
