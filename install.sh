@@ -3,7 +3,7 @@ sudo apt install --fix-broken -y &>/dev/null
 sudo apt install nano mc wget -y &>/dev/null
 . <(wget -qO- https://raw.githubusercontent.com/Kallen-c/utils/main/logo.sh)
 if [ ! $EVMOS_NODENAME ]; then
-	read -p "Введите имя ноды (придумайте, без спецсимволов - только буквы и цифры): " EVMOS_NODENAME
+	read -p "Введите имя ноды: " EVMOS_NODENAME
 fi
 sleep 1
 echo 'export EVMOS_NODENAME='$EVMOS_NODENAME >> $HOME/.profile
