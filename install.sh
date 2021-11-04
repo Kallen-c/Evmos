@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt install --fix-broken -y &>/dev/null
 sudo apt install nano mc wget -y &>/dev/null
-echo '\033[0;35mstarting'
+echo -e "\033[35m"
 . <(wget -qO- https://raw.githubusercontent.com/Kallen-c/utils/main/logo.sh)
 if [ ! $EVMOS_NODENAME ]; then
 	read -p "Enter node name: " EVMOS_NODENAME
@@ -63,3 +63,4 @@ sudo systemctl daemon-reload
 sudo systemctl enable evmos &>/dev/null
 sudo systemctl start evmos
 echo "Service files created, return to guide"
+echo -e "\033[0m"
