@@ -1,32 +1,29 @@
 #!/bin/bash
 sudo apt install --fix-broken -y &>/dev/null
 sudo apt install nano mc wget -y &>/dev/null
+echo '\033[0;35mstarting'
 . <(wget -qO- https://raw.githubusercontent.com/Kallen-c/utils/main/logo.sh)
 if [ ! $EVMOS_NODENAME ]; then
-	read -p "Введите имя ноды: " EVMOS_NODENAME
+	read -p "Enter node name: " EVMOS_NODENAME
 fi
 sleep 1
 echo 'export EVMOS_NODENAME='$EVMOS_NODENAME >> $HOME/.profile
-echo "------------------------------------"
-echo "Установка доп библиотек"
+echo "Installing dependencies"
 curl -s https://raw.githubusercontent.com/Kallen-c/utils/main/installers/install_ufw.sh | bash &>/dev/null
 curl -s https://raw.githubusercontent.com/Kallen-c/utils/main/installers/install_go.sh | bash &>/dev/null
 source .profile
 source .bashrc
 sleep 1
-echo "Библиотеки установлены"
-echo "------------------------------------"
+echo "Depedencies installed"
 if [ ! -d $HOME/evmos/ ]; then
   git clone https://github.com/tharsis/evmos.git &>/dev/null
 	cd $HOME/evmos
 	git checkout v0.1.3 &>/dev/null
 fi
-echo "Репозиторий склонирован, билдим"
-echo "------------------------------------"
+echo "Repo cloned, building..."
 cd $HOME/evmos
 make install &>/dev/null
-echo "Билд готов"
-echo "------------------------------------"
+echo "Build succeeded"
 evmosd config chain-id evmos_9000-1 &>/dev/null
 evmosd config keyring-backend file &>/dev/null
 evmosd init "$EVMOS_NODENAME" --chain-id evmos_9000-1 &>/dev/null
@@ -42,8 +39,7 @@ sed -i -e "s%^moniker *=.*%moniker = \"$EVMOS_NODENAME\"%; "\
 "s%^rpc_servers *=.*%rpc_servers = \"${bootstrap_node},${bootstrap_node}\"%; "\
 "s%^trust_height *=.*%trust_height = $block_height%; "\
 "s%^trust_hash *=.*%trust_hash = \"$trust_hash\"%" $HOME/.evmosd/config/config.toml
-echo "Конфигурирование ноды завершено"
-echo "------------------------------------"
+echo "Node config succeeded"
 sudo tee <<EOF >/dev/null /etc/systemd/journald.conf
 Storage=persistent
 EOF
@@ -66,5 +62,4 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable evmos &>/dev/null
 sudo systemctl start evmos
-echo "Сервисные файлы созданы, возвращаемся к гайду"
-echo "------------------------------------"
+echo "Service files created, return to guide"
