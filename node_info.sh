@@ -3,7 +3,7 @@
 daemon="`which evmosd`"
 token_name="photon"
 node_dir="$HOME/.evmosd/"
-wallet_name="$evmos_wallet_name"
+wallet_name="$EVMOS_NODENAME"
 wallet_address="$evmos_wallet_address"
 wallet_address_variable="evmos_wallet_address"
 
