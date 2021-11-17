@@ -86,5 +86,38 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable evmos &>/dev/null
 sudo systemctl start evmos
+
+
+source .profile
+evmosd keys add "$EVMOS_NODENAME" --keyring-backend file
+source .profile
+
+sudo systemctl stop evmos
+evmosd unsafe-reset-all
+rm -f $HOME/.evmosd/config/genesis.json
+evmosd init "$EVMOS_NODENAME" --chain-id=evmos_9000-2
+evmosd add-genesis-account $(evmosd keys show "$EVMOS_NODENAME" -a) 1000000000000aphoton
+
+evmosd gentx "$EVMOS_NODENAME" 1000000000000aphoton \
+--commission-rate=0.1 \
+--commission-max-rate=1 \
+--commission-max-change-rate=0.1 \
+--pubkey $(evmosd tendermint show-validator) \
+--chain-id=evmos_9000-2
+
+
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+echo -e "gentx json for github"
+echo -e ""
+cat $HOME/.evmosd/config/gentx/gentx-*.json
+
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
+
 echo "Service files created, return to guide"
 echo -e "\033[0m"
