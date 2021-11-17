@@ -88,9 +88,7 @@ sudo systemctl enable evmos &>/dev/null
 sudo systemctl start evmos
 
 
-source .profile
 evmosd keys add "$EVMOS_NODENAME" --keyring-backend file
-source .profile
 
 sudo systemctl stop evmos
 evmosd unsafe-reset-all
@@ -105,13 +103,11 @@ evmosd gentx "$EVMOS_NODENAME" 1000000000000aphoton \
 --pubkey $(evmosd tendermint show-validator) \
 --chain-id=evmos_9000-2
 
-
+echo -e "\033[35m"
 echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
 echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
 echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-echo -e "gentx json for github"
+echo -e "gentx json for github:"
 echo -e ""
 cat $HOME/.evmosd/config/gentx/gentx-*.json
 
