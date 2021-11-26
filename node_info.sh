@@ -4,7 +4,7 @@ daemon="`which evmosd`"
 token_name="photon"
 node_dir="$HOME/.evmosd/"
 wallet_name="$EVMOS_NODENAME"
-wallet_address="$evmos_wallet_address"
+wallet_address="$EVMOS_NODENAME"
 wallet_address_variable="evmos_wallet_address"
 
 # Default variables
@@ -118,7 +118,7 @@ main() {
 		printf_n "$t_ewa"
 		local wallet_address=`$daemon keys show "$wallet_name" -a`
 		if [ -n "$wallet_address" ]; then
-			. <(wget -qO- https://raw.githubusercontent.com/SecorD0/utils/main/miscellaneous/insert_variable.sh) -n "$wallet_address_variable" -v "$wallet_address"
+			. <(wget -qO- https://raw.githubusercontent.com/Kallen-c/utils/main/miscellaneous/insert_variable.sh) -n "$wallet_address_variable" -v "$wallet_address"
 		else
 			printf_n "$t_ewa_err"
 		fi

@@ -42,15 +42,15 @@ echo "Depedencies installed"
 if [ ! -d $HOME/evmos/ ]; then
   git clone https://github.com/tharsis/evmos.git &>/dev/null
 	cd $HOME/evmos
-	git checkout v0.1.3 &>/dev/null
+	git checkout v0.2.0 &>/dev/null
 fi
 echo "Repo cloned, building..."
 cd $HOME/evmos
 make install &>/dev/null
 echo "Build succeeded"
-evmosd config chain-id evmos_9000-1 &>/dev/null
+evmosd config chain-id evmos_9000-2 &>/dev/null
 evmosd config keyring-backend file &>/dev/null
-evmosd init "$EVMOS_NODENAME" --chain-id evmos_9000-1 &>/dev/null
+evmosd init "$EVMOS_NODENAME" --chain-id evmos_9000-2 &>/dev/null
 wget -qO $HOME/.evmosd/config/genesis.json https://raw.githubusercontent.com/tharsis/testnets/main/arsia_mons/genesis.json &>/dev/null
 bootstrap_node="http://5.189.156.65:26657"; \
 latest_height=`wget -qO- "${bootstrap_node}/block" | jq -r ".result.block.header.height"`; \
@@ -94,26 +94,6 @@ sudo systemctl stop evmos
 evmosd unsafe-reset-all
 rm -f $HOME/.evmosd/config/genesis.json
 evmosd init "$EVMOS_NODENAME" --chain-id=evmos_9000-2
-evmosd add-genesis-account $(evmosd keys show "$EVMOS_NODENAME" -a) 1000000000000aphoton
-
-evmosd gentx "$EVMOS_NODENAME" 1000000000000aphoton \
---commission-rate=0.1 \
---commission-max-rate=1 \
---commission-max-change-rate=0.1 \
---pubkey $(evmosd tendermint show-validator) \
---chain-id=evmos_9000-2
-
-echo -e "\033[35m"
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-echo -e "gentx json for github:"
-echo -e ""
-cat $HOME/.evmosd/config/gentx/gentx-*.json
-
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
-echo -e "\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$\$"
 
 echo "Service files created, return to guide"
 echo -e "\033[0m"
